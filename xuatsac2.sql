@@ -39,11 +39,12 @@ INSERT INTO appointments (patient_id, doctor_id, appointment_date, diagnosis, fe
 -- 2. a.
 CREATE INDEX idx_patients_phone ON patients(phone);
 -- 2. b.
-CREATE INDEX idx_hash_patients_city ON patients(city);
+CREATE INDEX idx_hash_patients_city ON patients USING hash (city);
 -- 2. c.
-CREATE INDEX idx_gin_patients_symtoms ON patients(symptoms);
+CREATE INDEX idx_gin_patients_symtoms ON patients USING gin(symptoms);
 -- 2. d.
-CREATE INDEX idx_gist_appointments_fee ON appointments(fee);
+CREATE EXTENSION btree_gist;
+CREATE INDEX idx_gist_appointments_fee ON appointments USING gist(fee);
 
 -- 3.
 CREATE index idx_appointments_date ON appointments(appointment_date);
